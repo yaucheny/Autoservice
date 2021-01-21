@@ -16,19 +16,19 @@ public class MasterServiceImpl implements MasterService {
 
 	private MasterDao masterDao;
 	private MasterConverter masterConverter;
-
+	@Override
 	public void addMaster(MasterDto masterDto)
 	{
 		MasterEntity masterEntity = masterConverter.convertFromDtoToEntity(masterDto);
 		masterDao.saveOrUpdate(masterEntity);
 	}
-
+	@Override
 	public MasterDto findMasterById(long id)
 	{
 		MasterEntity masterEntity = masterDao.getById(id);
 		return masterConverter.convertFromEntityToDto(masterEntity);
 	}
-
+	@Override
 	public void deleteMaster(MasterDto masterDto)
 	{
 		MasterEntity masterEntity = masterConverter.convertFromDtoToEntity(masterDto);
@@ -47,6 +47,13 @@ public class MasterServiceImpl implements MasterService {
 	}
 
 	public List<MasterDto> findFreeMasters()
+	{
+		List<MasterEntity> masterEntities = masterDao.getFreeMasters();
+		return masterConverter.convertFromEntitiesToDtos(masterEntities);
+	}
+
+
+	public List<MasterDto> getFreeMasters()
 	{
 		List<MasterEntity> masterEntities = masterDao.getFreeMasters();
 		return masterConverter.convertFromEntitiesToDtos(masterEntities);
